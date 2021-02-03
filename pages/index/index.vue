@@ -29,7 +29,7 @@
 				</view>
 			<!-- </view> -->
 			<!-- <view class="friends"> -->
-				<view class="friend-item" v-for="item in friends" :key="item.id">
+				<view class="friend-item" v-for="item in friends" >
 					<view class="friend-item-l">
 						<text class="tip">{{item.tip}}</text>
 						<image :src="item.imgurl" mode=""></image>
@@ -69,10 +69,10 @@
 			},
 			getFriends: function(){
 				this.friends=datas.friends();
+				this.friends.sort((a,b)=>Date.parse(b.time)-Date.parse(a.time));
 				this.friends.map(v=>{
 					v.imgurl = '../../static/images/img/'+v.imgurl;
-				})
-				console.log(this.friends);
+				});
 			}
 		}
 	}
