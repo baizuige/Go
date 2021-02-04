@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="top-bar">
 			<view class="top-bar-left" @tap="toSignIn">
-				<image src="../../static/images/common/back.png"></image>
+				<image src="../../static/images/common/back.png" class="back"></image>
 			</view>
 		</view>
 		<view class="logo">
@@ -102,105 +102,82 @@
 </script>
 
 <style lang="scss">
-	.content{
-		padding-top: var(--status-bar-height);
+	@import "../../commons/css/mycss.scss";
+	.logo{
+		width: 194rpx;
+		height: 92rpx;
+		margin: 178rpx auto 0 auto;
 		image{
-			display: block;
-		}
-		.top-bar{
-			height: 88rpx;
-			width: 100%;
-			background: $uni-bg-color;
-			box-sizing: border-box;
-			.top-bar-left{
-				float: left;
-				padding-left: 32rpx;
-				height: 88rpx;
-				width: 88rpx;
-				image{
-					margin-top: 21rpx;
-					width: 26rpx;
-					height: 46rpx;
-				}
-			}
-		}
-		.logo{
 			width: 194rpx;
 			height: 92rpx;
-			margin: 178rpx auto 0 auto;
-			image{
-				width: 194rpx;
-				height: 92rpx;
-			}
 		}
-		.main{
-			padding: 54rpx $uni-spacing-row-lg;
-			position: relative;
-			.title{
-				font-size: 56rpx;
-				font-weight: 500;
-				color: $uni-text-color;
-				line-height: 80rpx;
-			}
-			.inputs{
-				margin-top: 8rpx;
-				input{
-					margin-top: 46rpx;
-					height: 84rpx;
-					font-size: $uni-font-size-lg;
-					color: $uni-text-color;
-					line-height: 84rpx;
-					border-bottom: 1px solid $uni-border-color;
-					box-sizing: border-box;
-				}
-				.inputs-div{
-					position: relative;
-				}
-				.employ, .invalid{
-					position: absolute;
-					right: 0;
-					top: 0rpx;
-					font-size: $uni-font-size-base;
-					font-weight: 500;
-					color: $uni-color-warning;
-					line-height: 84rpx;
-				}
-				.ok{
-					position: absolute;
-					top: 36rpx;
-					right: 0;
-					width: 38rpx;
-					height: 30rpx;
-				}
-				.look{
-					 position: absolute;
-					 top: 36rpx;
-					 right: 0;
-					 width: 32rpx;
-					 height: 18rpx;
-				 }
-			}
-			button{
-				margin: 120rpx auto 0;
-				width: 520rpx;
-				height: 96rpx;
-				background-color: $uni-color-primary;
-				box-shadow: 0 50rpx 32rpx -36rpx rgba(255,228,49,0.4);
-				border-radius: 48rpx;
+	}
+	.main{
+		padding: 54rpx $uni-spacing-row-lg;
+		position: relative;
+		.title{
+			font-size: 56rpx;
+			font-weight: 500;
+			color: $uni-text-color;
+			line-height: 80rpx;
+		}
+		.inputs{
+			margin-top: 8rpx;
+			input{
+				margin-top: 46rpx;
+				height: 84rpx;
 				font-size: $uni-font-size-lg;
-				font-weight: 500;
 				color: $uni-text-color;
-				line-height: 96rpx;
+				line-height: 84rpx;
+				border-bottom: 1px solid $uni-border-color;
+				box-sizing: border-box;
 			}
-			.uncomplete{
-				background-color: rgba(39,40,50,0.2);
-				color: $uni-text-color-inverse;
-				box-shadow: none;
+			.inputs-div{
+				position: relative;
 			}
-			[class=button-hover]{
-				background-color: #f1c40f;
+			.employ, .invalid{
+				position: absolute;
+				right: 0;
+				top: 0rpx;
+				font-size: $uni-font-size-base;
+				font-weight: 500;
+				color: $uni-color-warning;
+				line-height: 84rpx;
 			}
-			
+			.ok{
+				position: absolute;
+				top: 36rpx;
+				right: 0;
+				width: 38rpx;
+				height: 30rpx;
+			}
+			.look{
+				 position: absolute;
+				 top: 36rpx;
+				 right: 0;
+				 width: 32rpx;
+				 height: 18rpx;
+			 }
+		}
+		button{
+			margin: 120rpx auto 0;
+			width: 520rpx;
+			height: 96rpx;
+			background-color: $uni-color-primary;
+			box-shadow: 0 50rpx 32rpx -36rpx rgba(255,228,49,0.4);
+			border-radius: 48rpx;
+			font-size: $uni-font-size-lg;
+			font-weight: 500;
+			color: $uni-text-color;
+			line-height: 96rpx;
+		}
+		.uncomplete{
+			background-color: rgba(39,40,50,0.2);
+			color: $uni-text-color-inverse;
+			box-shadow: none;
+		}
+		[class=button-hover]{
+			background-color: #f1c40f;
 		}
 		
 	}

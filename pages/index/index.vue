@@ -2,7 +2,7 @@
 	<view class="content">
 		<view class="top-bar">
 			<view class="top-bar-left">
-				<image src="../../static/images/img/four.png"></image>
+				<image src="../../static/images/img/four.png" class="admin"></image>
 			</view>
 			<view class="top-bar-center">
 				<image src="../../static/images/index/logo.png"></image>
@@ -31,7 +31,7 @@
 			<!-- <view class="friends"> -->
 				<view class="friend-item" v-for="item in friends" >
 					<view class="friend-item-l">
-						<text class="tip">{{item.tip}}</text>
+						<view class="tip" v-if="parseInt(item.tip)>0">{{item.tip}}</view>
 						<image :src="item.imgurl" mode=""></image>
 					</view>
 					<view class="friend-item-r">
@@ -72,6 +72,9 @@
 				this.friends.sort((a,b)=>Date.parse(b.time)-Date.parse(a.time));
 				this.friends.map(v=>{
 					v.imgurl = '../../static/images/img/'+v.imgurl;
+					if(+v.tip>99){
+						v.tip = '99+';
+					}
 				});
 			}
 		}
@@ -79,77 +82,24 @@
 </script>
 
 <style lang="scss">
+	@import "../../commons/css/mycss.scss";
 	*{
 		margin: 0;
 		padding: 0;
 	}
-	.content {
-		padding-top: var(--status-bar-height);
-	}
-	image{
-		display: block;
-	}
-	.top-bar {
+	.top-bar{
 		position: fixed;
 		top: 0;
 		left: 0;
-		height: 88rpx;
-		width: 100%;
 		background: $uni-bg-color;
 		box-shadow: 0 1px 0 0 $uni-border-color;
-		box-sizing: border-box;
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		z-index: 1000;
-		
-		.top-bar-left{
-			padding-left: $uni-spacing-col-base;
-			image{
-				width: 68rpx;
-				height: 68rpx;
-				border-radius: 16rpx;
-			}
-		}
-		.top-bar-center{
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			transform: translateX(-50%) translateY(-50%);
-			image{
-				width: 88rpx;
-				height: 42rpx;
-			}
-		}
-		.top-bar-right{
-			padding-right: 14rpx;
-			.search, .add{
-				width: 88rpx;
-				height: 88rpx;
-				float: left;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-			}
-			image{
-				width: 52rpx;
-				height: 52rpx;
-			}
-		}
 	}
 	.main{
-		// width: 100%;
 		box-sizing: border-box;
 		padding-top: 88rpx;
 	}
-	.friends{
-		// padding-left: $uni-spacing-col-base;
-	}
 	.friend-item{
-		// width: 100%;
-		// box-sizing: border-box;
 		height: 96rpx;
-		// margin: 16rpx 0;
 		padding:16rpx $uni-spacing-col-base;
 		&:active{
 			background-color: $uni-bg-color-grey;
@@ -166,12 +116,16 @@
 			.tip{
 				position: absolute;
 				z-index: 10;
-				top: -6rpx;
-				left: 68rpx;
+				top: 8rpx;
+				right: 8rpx;
+				letter-spacing: 1rpx;
+				transform: translateX(50%) translateY(-50%);
 				min-width: 36rpx;
+				padding: 0 8rpx;
+				box-sizing: border-box;
 				height: 36rpx;
 				background-color: $uni-color-warning;
-				border-radius: $uni-border-radius-circle;
+				border-radius: 18rpx;
 				font-size: $uni-font-size-sm;
 				color: $uni-text-color-inverse;
 				line-height: 36rpx;
