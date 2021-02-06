@@ -8,7 +8,7 @@
 				<image src="../../static/images/index/logo.png"></image>
 			</view>
 			<view class="top-bar-right">
-				<view class="search"><image src="../../static/images/index/search.png"></image></view>
+				<view class="search" @tap="toSearch"><image src="../../static/images/index/search.png"></image></view>
 				<view class="add"><image src="../../static/images/index/add.png"></image></view>
 			</view>
 		</view>
@@ -64,6 +64,11 @@
 			this.getFriends();
 		},
 		methods: {
+			toSearch: function(){
+				uni.navigateTo({
+					url:"../search/search"
+				});
+			},
 			changeTime: function(date){
 				return myfunc.dateTime(date);
 			},
