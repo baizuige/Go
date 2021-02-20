@@ -2,51 +2,34 @@
 	<view class="content">
 		<view class="top-bar">
 			<view class="top-bar-left">
-				<image src="../../static/images/img/four.png" class="admin"></image>
+				<image @click="toUserHome()" src="../../static/images/img/user.png" class="admin"></image>
 			</view>
-			<view class="top-bar-center">
-				<image src="../../static/images/index/logo.png"></image>
-			</view>
+			<image src="../../static/images/index/logo.png" class="logo"></image>
 			<view class="top-bar-right">
-				<view class="search" @tap="toSearch"><image src="../../static/images/index/search.png"></image></view>
-				<view class="add"><image src="../../static/images/index/add.png"></image></view>
+				<image @click="toSearch()" src="../../static/images/index/search.png" class="search"></image>
+				<image src="../../static/images/index/add.png" class="add"></image>
 			</view>
 		</view>
 		<view class="main">
-			<!-- <view class="apply"> -->
-				<view class="friend-item">
-					<view class="friend-item-l">
-						<text class="tip">1</text>
-						<image src="../../static/images/index/apply.png" mode=""></image>
+			<view class="friend" v-for="item,index in friends" :key="index">
+				<image :src="item.imgurl" mode=""></image>
+				<view class="friend-content">
+					<view class="friend-name ellipsis">
+						{{item.name}}
 					</view>
-					<view class="friend-item-r">
-						<view class="top">
-							<view class="name">好友申请</view>
-							<view class="time">17:14</view>
-						</view>
-						<view class="message">哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈</view>
+					<view class="friend-message ellipsis">
+						{{item.message}}
 					</view>
 				</view>
-			<!-- </view> -->
-			<!-- <view class="friends"> -->
-				<view class="friend-item" v-for="item in friends" >
-					<view class="friend-item-l">
-						<view class="tip" v-if="parseInt(item.tip)>0">{{item.tip}}</view>
-						<image :src="item.imgurl" mode=""></image>
+				<view class="tips">
+					<view class="time">
+						{{item.time}}
 					</view>
-					<view class="friend-item-r">
-						<view class="top">
-							<view class="name">{{item.name}}</view>
-							<view class="time">{{changeTime(item.time)}}</view>
-						</view>
-						<view class="message">{{item.message}}</view>
+					<view class="tip" v-if="item.tip!==0">
+						{{item.tip}}
 					</view>
 				</view>
-				
-			<!-- </view> -->
-		</view>
-		
-		<view class="test">
+			</view>
 		</view>
 	</view>
 </template>
@@ -64,6 +47,11 @@
 			this.getFriends();
 		},
 		methods: {
+			toUserHome: function(){
+				uni.navigateTo({
+					url:"../userhome/userhome"
+				})
+			},
 			toSearch: function(){
 				uni.navigateTo({
 					url:"../search/search"
@@ -80,6 +68,7 @@
 					if(+v.tip>99){
 						v.tip = '99+';
 					}
+					v.time=this.changeTime(v.time)
 				});
 			}
 		}
@@ -88,89 +77,90 @@
 
 <style lang="scss">
 	@import "../../commons/css/mycss.scss";
-	*{
-		margin: 0;
-		padding: 0;
-	}
 	.top-bar{
-		position: fixed;
-		top: 0;
-		left: 0;
-		background: $uni-bg-color;
-		box-shadow: 0 1px 0 0 $uni-border-color;
+		box-shadow: 0 2rpx 0 0 $uni-border-color;
+		.admin{
+			width: 68rpx;
+			height: 68rpx;
+			border-radius: 16rpx;
+		}
+		.logo{
+			position: absolute;
+			width: 88rpx;
+			height: 42rpx;
+			bottom: 44rpx;
+			left: 50%;
+			transform: translate(-50%,50%);
+		}
+		.search{
+			width: 52rpx;
+			height: 52rpx;
+		}
+		.add{
+			width: 48rpx;
+			height: 48rpx;
+		}
+		.top-bar-right{
+			width: 140rpx;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
 	}
 	.main{
-		box-sizing: border-box;
-		padding-top: 88rpx;
-	}
-	.friend-item{
-		height: 96rpx;
-		padding:16rpx $uni-spacing-col-base;
-		&:active{
-			background-color: $uni-bg-color-grey;
-		}
-		.friend-item-l{
-			position: relative;
-			float: left;
+		.friend{
+			height: 128rpx;
+			display: flex;
+			align-items: center;
 			image{
 				width: 96rpx;
 				height: 96rpx;
-				border-radius: $uni-border-radius-base;
-				background-color: $uni-color-primary;
+				border-radius: 24rpx;
 			}
-			.tip{
-				position: absolute;
-				z-index: 10;
-				top: 8rpx;
-				right: 8rpx;
-				letter-spacing: 1rpx;
-				transform: translateX(50%) translateY(-50%);
-				min-width: 36rpx;
-				padding: 0 8rpx;
-				box-sizing: border-box;
-				height: 36rpx;
-				background-color: $uni-color-warning;
-				border-radius: 18rpx;
-				font-size: $uni-font-size-sm;
-				color: $uni-text-color-inverse;
-				line-height: 36rpx;
-				text-align: center;
-			}
-		}
-		.friend-item-r{
-			padding-left: 128rpx;
-			height: 96rpx;
-			.top{
-				height: 50rpx;
-				.name{
-					float: left;
+			.friend-content{
+				width: 494rpx;
+				height: 90rpx;
+				margin-left: 32rpx;
+				.friend-name{
+					height: 50rpx;
+					line-height: 50rpx;
 					font-size: 36rpx;
-					font-weight: 400;
-					color: $uni-text-color;
-					line-height: 50rpx;
+					color: #272832;
 				}
-				.time{
-					float: right;
-					font-size: $uni-font-size-sm;
-					color: $uni-text-color-disable;
-					line-height: 50rpx;
+				.friend-message{
+					height: 40rpx;
+					line-height: 40rpx;
+					font-size: $uni-font-size-base;
+					color: $uni-text-color-grey;
 				}
 			}
-			.message{
-				height: 46rpx;
-				font-size: $uni-font-size-base;
-				color: $uni-text-color-grey;
-				line-height: 46rpx;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				white-space: nowrap;
+			.tips{
+				width: 64rpx;
+				height: 70rpx;
+				.time{
+					height: 34rpx;
+					text-align: center;
+					line-height: 34rpx;
+					letter-spacing: -2rpx;
+					font-size: $uni-font-size-sm;
+					color: $uni-text-color-grey;
+				}
+				.tip{
+					float: right;
+					height: 36rpx;
+					min-width: 36rpx;
+					background-color: #FF5D5B;
+					font-size: $uni-font-size-sm;
+					color: #FFFFFF;
+					text-align: center;
+					line-height: 36rpx;
+					padding: 0rpx 10rpx;
+					border-radius: 18rpx;
+					box-sizing: border-box;
+					letter-spacing: -2rpx;
+				}
 			}
 		}
-		
 	}
-	// .test{
-	// 	width: 100%;
-	// 	height: 2000rpx;
-	// }
 	
 </style>

@@ -1,12 +1,12 @@
 <template>
 	<view class="content">
 		<view class="top-bar">
-			<view class="search">
-				<image src="../../static/images/search/search.png"></image>
+			<view class="search top-bar-left">
 				<input type="search" placeholder="搜索用户/群" placeholder-style="color:#aaa;font-weight:400;" @input="search"/>
+				<image src="../../static/images/search/search.png"></image>
 			</view>
 			<view class="top-bar-right">
-				<view class="text" @tap="toIndex">取消</view>
+				<view class="back" @tap="toIndex">返回</view>
 			</view>
 		</view>
 		<view class="main">
@@ -14,9 +14,9 @@
 				<view class="title">用户</view>
 				<view class="list user" v-for="item in items">
 					<image :src="item.imgurl"></image>
-					<view class="message">
-						<view class="name" v-html="item.name"></view>
-						<view class="email" v-html="item.email"></view>
+					<view class="user-content">
+						<view class="name ellipsis" v-html="item.name"></view>
+						<view class="email ellipsis" v-html="item.email"></view>
 					</view>
 					<view class="button send">发消息</view>
 				</view>
@@ -37,13 +37,13 @@
 		methods:{
 			//深拷贝浅拷贝！！！！！！
 			toIndex: function(){
-				uni.navigateTo({
-					url:"../index/index"
-				});
+				uni.navigateBack({
+					delta:1
+				})
 			},
 			loadUser: function(){
-				
 				this.arr = JSON.stringify(datas.friends());
+				console.log(this);
 			},
 			search: function(e){
 				this.items=[];
@@ -78,48 +78,42 @@
 </script>
 
 <style lang="scss">
-	image{
-		display: block;
-	}
+	@import "../../commons/css/mycss.scss";
 	.top-bar{
-		height: 88rpx;
-		padding: 0 $uni-spacing-col-base;
-		position: fixed;
-		top: 0;
-		left: 0;
-		right: 0;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		background: $uni-bg-color;
-		box-shadow: 0 1px 0 0 $uni-border-color;
-		z-index: 1000;
+		box-shadow: 0 2rpx 0 0 $uni-border-color;
 		.search{
-			flex: 0.9;
+			width: 600rpx;
+			height: 60rpx;
 			background-color: $uni-bg-color-grey;
 			border-radius: 10rpx;
 			display: flex;
 			justify-content: space-between;
 			align-items: center;
+			box-sizing: border-box;
 			padding-left: 12rpx;
 			input{
-				order: 1;
-				height: 72rpx;
 				flex: 1;
 			}
 			image{
-				order: 2;
-				padding: 16rpx 16rpx;
+				padding: 0 12rpx;
 				width: 40rpx;
 				height: 40rpx;
 			}
 		}
+		.back{
+			width: 56rpx;
+			height: 56rpx;
+			font-size: $uni-font-size-base;
+			line-height: 56rpx;
+			color: #272832;
+			letter-spacing: -0.96rpx;
+		}
 	}
 	.main{
-		padding: 88rpx $uni-spacing-col-base 0;
 		.result{
-			margin-top: $uni-spacing-col-base;
+			margin-top: 34rpx;
 			.title{
+				letter-spacing: -1.5rpx;
 				font-size: 44rpx;
 				font-weight: 600;
 				color: $uni-text-color;
@@ -133,25 +127,24 @@
 					width: 80rpx;
 					height: 80rpx;
 					border-radius: $uni-border-radius-base;
-					// float: left;
 				}
-				.message{
+				.user-content{
 					flex: 1;
-					margin-left: $uni-spacing-col-base;
-					// float: left;
+					margin-left: 32rpx;
 					.name{
-						font-size: 36rpx;
-						color: $uni-text-color;
+						height: 50rpx;
 						line-height: 50rpx;
+						font-size: 36rpx;
+						color: #272832;
 					}
 					.email{
 						font-size: $uni-font-size-sm;
 						color: $uni-text-color;
-						line-height: 28rpx;
+						height: 30rpx;
+						line-height: 30rpx;
 					}
 				}
 				.button{
-					// align-self: flex-end;
 					width: 120rpx;
 					height: 48rpx;
 					border-radius: 24rpx;
@@ -160,15 +153,12 @@
 					text-align: center;
 				}
 				.send{
-					color: #272832;
 					background-color: $uni-color-primary;
-				}
-				.add{
-					background-color: rgba(74,170,255,0.10);
-					color: $uni-color-success;
+					font-size: 24rpx;
+					color: #272832;
+					letter-spacing: -0.82rpx;
 				}
 			}
-			
 		}
 		
 	}
