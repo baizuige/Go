@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view  class="background">
-			<view class="bg">
+			<view class="bg" :animation="animationData_5">
 				
 			</view>
 			<image src="../../static/images/img/user.png" mode="aspectFill"></image>
@@ -10,14 +10,14 @@
 			<view class="top-bar-left" @tap="backOne">
 				<image class="back" src="../../static/images/common/back.png"></image>
 			</view>
-			<view class="top-bar-right" >
+			<view class="top-bar-right" @tap="toDetail">
 				<image class="more" src="../../static/images/group/more.png"></image>
 			</view>
 		</view>
 		<view class="main">
-			<view class="user-img">
-				<image src="../../static/images/img/user.png"  class="avatar"></image>
-				<image src="../../static/images/userhome/male.png" class="sex"></image>
+			<view class="user-img" :animation="animationData_2">
+				<image src="../../static/images/img/user.png"  class="avatar" :animation="animationData_3"></image>
+				<image src="../../static/images/userhome/male.png" class="sex" :animation="animationData_4"></image>
 			</view>
 			<view class="user-name">
 				{{user.name}}
@@ -29,19 +29,19 @@
 				{{user.intr}}
 			</view>
 			<view class="button-bar">
-				<view class="button">
+				<view class="button" @tap="addFriendAnimat">
 					加为好友
 				</view>
 			</view>
 		</view>
-		<view class="add-msg">
+		<view class="add-msg" :style="{height:addHeight+'px',bottom:-+addHeight+'px'}" :animation='animationData'>
 			<view class="name">
 				{{user.name}}
 			</view>
-			<textarea :value="myname+' 请求加为好友~'" maxlength="120" class="add-main" />
+			<textarea :value="myname+'请求加为好友~'" maxlength="120" class="add-main" />
 		</view>
-		<view class="add-bt">
-			<view class="close">
+		<view class="add-bt" :animation="animationData_1">
+			<view class="close" @tap="addFriendAnimat">
 				取消
 			</view>
 			<view class="send">
@@ -60,10 +60,19 @@
 					name: '白嘴鸽',
 					nick: 'baizuige',
 					intr: '生活是一部大百科全书，包罗万象；生活是一把六弦琴，弹奏出多重美妙的旋律：生活是一座飞马牌大钟，上紧发条，便会使人获得浓缩的生命。'
-				}
+				},
+				addHeight:'',
+				animationData:{},
+				animationData_1:{},
+				animationData_2:{},
+				animationData_3:{},
+				animationData_4:{},
+				animationData_5:{},
+				isAdd:false,
+				sexShow:true
 			};
 		},
-		onReady: function(){
+		onReady(){
 			this.getElementStyle();
 		},
 		methods:{
@@ -72,12 +81,68 @@
 					delta:1
 				});
 			},
+			toDetail: function(){
+				uni.navigateTo({
+					url: '../userdetail/userdetail'
+				})
+			},
 			getElementStyle: function(){
 				const query = uni.createSelectorQuery().in(this);
 				query.select('.background').boundingClientRect(data=>{
-				
-				})
-			}
+					this.addHeight = data.height-186;
+					console.log(this.addHeight)
+				}).exec();
+			},
+			addFriendAnimat: function(){
+				this.isAdd = !this.isAdd;
+				// this.sexShow = !this.sexShow;
+				let animation = uni.createAnimation({
+					duration:300,
+					timingFunction:'ease'
+				});
+				let animation_1 = uni.createAnimation({
+					duration:300,
+					timingFunction:'ease'
+				});
+				let animation_2 = uni.createAnimation({
+					duration:300,
+					timingFunction:'ease'
+				});
+				let animation_3 = uni.createAnimation({
+					duration:300,
+					timingFunction:'ease'
+				});
+				let animation_4 = uni.createAnimation({
+					duration:300,
+					timingFunction:'ease'
+				});
+				let animation_5 = uni.createAnimation({
+					duration:300,
+					timingFunction:'ease'
+				});
+				if(this.isAdd){
+					animation.bottom(0).step();
+					animation_1.bottom(0).step();
+					animation_2.width(120).height(120).top(82).left(30).step();
+					animation_3.width(120).height(120).step();
+					animation_4.opacity(0).step();
+					animation_5.backgroundColor('rgba(255,228,49,1)').step();
+				}else{
+					animation.bottom(-this.addHeight).step();
+					animation_1.bottom(-104).step();
+					animation_2.width(200).height(200).top(74).left(87.5).step();
+					animation_3.width(200).height(200).step();
+					animation_4.opacity(1).step();
+					animation_5.backgroundColor('#FFFFFF').step();
+				}
+				this.animationData = animation.export();
+				this.animationData_1 = animation_1.export();
+				this.animationData_2 = animation_2.export();
+				this.animationData_3 = animation_3.export();
+				this.animationData_4 = animation_4.export();
+				this.animationData_5 = animation_5.export();
+			},
+			
 		}
 	}
 </script>
@@ -103,7 +168,7 @@
 			width: 100%;
 			z-index: 10;
 			background-color: #FFFFFF;
-			opacity: 0.4;
+			opacity: 0.6;
 		}
 	}
 	.top-bar{
@@ -125,8 +190,9 @@
 		position: relative;
 		.user-img{
 			top: 148rpx;
-			left: 50%;
-			transform: translateX(-50%);
+			// left: 50%;
+			left: 175rpx;
+			// transform: translateX(-50%);
 			position: absolute;
 			width: 400rpx;
 			height: 400rpx;
@@ -210,8 +276,7 @@
 		width: 100%;
 		box-sizing: border-box;
 		padding: 0 56rpx;
-		top: 284rpx;
-		bottom: 0;
+		// top: 284rpx;
 		background: rgba(255,255,255,1);
 		border-radius: 40rpx 40rpx 0 0;
 		.name{
@@ -235,7 +300,7 @@
 		position: fixed;
 		z-index: 100;
 		width: 100%;
-		bottom: 0;
+		bottom: -104rpx;
 		height: 104rpx;
 		display: flex;
 		align-items: center;

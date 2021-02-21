@@ -1,8 +1,8 @@
 <template>
 	<view class="content">
 		<view class="top-bar">
-			<view class="top-bar-left" @tap="toSignIn">
-				<image src="../../static/images/common/back.png" class="back"></image>
+			<view class="top-bar-left" @tap="backOne">
+				<image src="../../static/images/common/back.png" class="back"  mode="aspectFit"></image>
 			</view>
 		</view>
 
@@ -95,10 +95,10 @@
 					this.isok=true;
 				}
 			},
-			toSignIn: function(){
-				uni.navigateTo({
-					url:"../signin/signin"
-				})
+			backOne: function(){
+				uni.navigateBack({
+					delta:1
+				});
 			}
 		}
 	}

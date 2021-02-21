@@ -13,7 +13,9 @@
 			<view class="search-user result">
 				<view class="title">用户</view>
 				<view class="list user" v-for="item in items">
-					<image :src="item.imgurl"></image>
+					<navigator url="../userhome/userhome?id=0"class="top-bar-left">
+						<image :src="item.imgurl"></image>
+					</navigator>
 					<view class="user-content">
 						<view class="name ellipsis" v-html="item.name"></view>
 						<view class="email ellipsis" v-html="item.email"></view>

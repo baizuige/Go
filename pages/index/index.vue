@@ -1,9 +1,9 @@
 <template>
 	<view class="content">
 		<view class="top-bar">
-			<view class="top-bar-left">
-				<image @click="toUserHome()" src="../../static/images/img/user.png" class="admin"></image>
-			</view>
+			<navigator url="../userhome/userhome?id=0"class="top-bar-left">
+				<image src="../../static/images/img/user.png" class="admin"></image>
+			</navigator>
 			<image src="../../static/images/index/logo.png" class="logo"></image>
 			<view class="top-bar-right">
 				<image @click="toSearch()" src="../../static/images/index/search.png" class="search"></image>
